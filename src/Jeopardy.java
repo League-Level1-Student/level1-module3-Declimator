@@ -27,7 +27,8 @@ import javax.swing.JPanel;
 public class Jeopardy implements ActionListener {
 	private JButton firstButton;
 	private JButton secondButton;
-	private JButton thirdButton, fourthButton;
+	private JButton thirdButton, fourthButton, fifthButton;
+	Clip clip;
 
 	private JPanel quizPanel;
 	int score = 0;
@@ -48,26 +49,35 @@ public class Jeopardy implements ActionListener {
 		// 2. Give your frame a title
 		frame.setTitle("Jeopardy");
 		// 3. Create a JPanel variable to hold the header using the createHeader method
-		JPanel panel = createHeader("baseball");
+		JPanel panel = createHeader("something");
 		// 4. Add the header component to the quizPanel
 		quizPanel.add(panel);
 		// 5. Add the quizPanel to the frame
 		frame.add(quizPanel);
 		// 6. Use the createButton method to set the value of firstButton
-		JButton firstbutton = createButton("200");
+		firstButton = createButton("200");
 		// 7. Add the firstButton to the quizPanel
-		frame.add(firstbutton);
+		quizPanel.add(firstButton);
 		// 8. Write the code inside the createButton() method below. Check that your
 		// game looks like Figure 1 in the Jeopardy Handout - http://bit.ly/1bvnvd4.
 
 		// 9. Use the secondButton variable to hold a button using the createButton
 		// method
-		secondButton = createButton("200");
+		secondButton = createButton("400");
+		thirdButton = createButton("600");
+		fourthButton = createButton("800");
+		fifthButton = createButton("1000");
 		// 10. Add the secondButton to the quizPanel
 		quizPanel.add(secondButton);
+		quizPanel.add(thirdButton);
+		quizPanel.add(fourthButton);
+		quizPanel.add(fifthButton);
 		// 11. Add action listeners to the buttons (2 lines of code)
 		firstButton.addActionListener(this);
 		secondButton.addActionListener(this);
+		thirdButton.addActionListener(this);
+		fourthButton.addActionListener(this);
+		fifthButton.addActionListener(this);
 		// 12. Fill in the actionPerformed() method below
 
 		frame.pack();
@@ -109,46 +119,70 @@ public class Jeopardy implements ActionListener {
 		// If the buttonPressed was the firstButton
 		if (buttonPressed == firstButton) {
 			// Call the askQuestion() method
-			askQuestion("what am I", "testtest", 200);
+			askQuestion("what's 1+1", "2", 200);
 			// Fill in the askQuestion() method. When you play the game, the score should
 			// change.
+			firstButton.setText(null);
+			firstButton.removeActionListener(this);
 		}
 		// Or if the buttonPressed was the secondButton
+		else if (buttonPressed == secondButton) {
 
-		// Call the askQuestion() method with a harder question
-
-		// Clear the button text (set the button text to nothing)
-
+			// Call the askQuestion() method with a harder question
+			askQuestion("what's 1+2", "3", 400);
+			secondButton.removeActionListener(this);
+			// Clear the button text (set the button text to nothing)
+			secondButton.setText(null);
+		} else if (buttonPressed == thirdButton) {
+			askQuestion("what's 1+3", "4", 600);
+			thirdButton.removeActionListener(this);
+			thirdButton.setText(null);
+		} else if (buttonPressed == fourthButton) {
+			askQuestion("what's 1+4", "5", 800);
+			fourthButton.removeActionListener(this);
+			fourthButton.setText(null);
+		} else if (buttonPressed == fifthButton) {
+			askQuestion("what's 1+5", "six", 1000);
+			fifthButton.removeActionListener(this);
+			fifthButton.setText(null);
+		}
 	}
 
 	private void askQuestion(String question, String correctAnswer, int prizeMoney) {
 		// Remove this temporary message
-		JOptionPane.showMessageDialog(null, "this is where the question will be asked");
+
 		// Use a pop up to ask the user the question
+		String response = JOptionPane.showInputDialog(question);
+		clip.stop();
 
 		// If the answer is correct
+		if (response.equalsIgnoreCase(correctAnswer)) {
 
-		// Increase the score by the prizeMoney
-
-		// Call the updateScore() method
-
-		// Pop up a message to tell the user they were correct
-
+			// Increase the score by the prizeMoney
+			score = score + prizeMoney;
+			// Call the updateScore() method
+			updateScore();
+			// Pop up a message to tell the user they were correct
+			JOptionPane.showMessageDialog(null, "Correct");
+			showCorrectImage();
+		}
 		// Otherwise
-
-		// Decrement the score by the prizeMoney
-
-		// Pop up a message to tell the user the correct answer
-
-		// Call the updateScore() method
-
+		else {
+			// Decrement the score by the prizeMoney
+			score = score - prizeMoney;
+			// Pop up a message to tell the user the correct answer
+			JOptionPane.showMessageDialog(null, "Incorrect, the correct answer was " + correctAnswer);
+			// Call the updateScore() method
+			updateScore();
+			showIncorrectImage();
+		}
 	}
 
 	public void playJeopardyTheme() {
 		try {
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(new File("/Users/League/Google Drive/league-sounds/jeopardy.wav"));
-			Clip clip = AudioSystem.getClip();
+			clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
 		} catch (Exception ex) {
@@ -183,11 +217,11 @@ public class Jeopardy implements ActionListener {
 	}
 
 	void showCorrectImage() {
-		showImage("correct.jpg");
+		showImage("correct.png");
 	}
 
 	void showIncorrectImage() {
-		showImage("incorrect.jpg");
+		showImage("incorrect.png");
 	}
 
 	private void showImage(String fileName) {
