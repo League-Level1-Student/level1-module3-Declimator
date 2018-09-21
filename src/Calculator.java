@@ -35,14 +35,24 @@ public void calculator(){
 	panel3 = new JPanel();
 	add = new JButton();
 	add.setText("add");
+	add.setBackground(Color.RED);
+	add.setOpaque(true);
 	subtract = new JButton();
 	subtract.setText("subtract");
+	subtract.setBackground(Color.ORANGE);
+	subtract.setOpaque(true);
 	multiply = new JButton();
 	multiply.setText("multiply");
+	multiply.setBackground(Color.YELLOW);
+	multiply.setOpaque(true);
 	divide = new JButton();
 	divide.setText("divide");
+	divide.setBackground(Color.GREEN);
+	divide.setOpaque(true);
 	modulo = new JButton();
 	modulo.setText("modulo");
+	modulo.setBackground(Color.CYAN);
+	modulo.setOpaque(true);
 	answer = new JLabel();
 	Font aFont = new Font("Ariel", Font.PLAIN, 40);
 	answer.setFont(aFont);
@@ -78,24 +88,28 @@ public void actionPerformed(ActionEvent e) {
 	JButton buttonclicked = (JButton) e.getSource();
 	String x = box1.getText();
 	String y = box2.getText();
-	int numx = Integer.parseInt(x);
-	int numy = Integer.parseInt(y);
+	Double numx = Double.parseDouble(x);
+	Double numy = Double.parseDouble(y);
 	if(buttonclicked==add) {
-	Integer sum = numx+numy;
+	Double sum = numx+numy;
 
 		answer.setText(sum.toString());
 	}
 	else if(buttonclicked==subtract) {
-		
+		Double difference = numx-numy;
+		answer.setText(difference.toString());
 	}
 	else if(buttonclicked==multiply) {
-		
+		Double product = numx*numy;
+		answer.setText(product.toString());
 	}
 	else if(buttonclicked==divide) {
-		
+		Double quotient = numx/numy;
+		answer.setText(quotient.toString());
 	}
 	else {
-		
+		Double  modulo = numx%numy;
+		answer.setText(modulo.toString());
 	}
 }
 }
