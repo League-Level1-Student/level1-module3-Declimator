@@ -6,9 +6,11 @@
 /CowTimer.class
 /FortuneTeller.class
 /GettingLatestTweet.class
+/Gridworld.class
 /Jeopardy.class
 /Movie.class
 /NastySuprise.class
+/Netflix.class
 /NetflixQueue.class
 /PigLatinTranslator.class
 /Recipes.html
@@ -35,5 +37,3 @@
 /seven.png
 /twitter4j-core-3.0.5.jar
 /up.jpg
-/Netflix.class
-/Gridworld.class
